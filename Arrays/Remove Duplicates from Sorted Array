@@ -1,0 +1,30 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        // Stack<Integer> st = new Stack<>();
+        // for(int i: nums){
+        //     if(st.isEmpty()) st.push(i);
+
+        //     else if(!st.isEmpty() && st.peek() != i){
+        //         st.push(i);
+        //     }
+        // }
+        // int n = st.size();
+        // int i = n-1;
+        // while(!st.isEmpty()){
+        //     nums[i] = st.pop();
+        //     i--;
+        // }
+        // return n;
+
+        int i=0, j=0;
+        int n = nums.length;
+        while(j<n && i<n){
+            if(nums[i] != nums[j]){
+                nums[i+1] = nums[j];
+                i++;
+            }
+            j++;
+        }
+        return i+1;
+    }
+}

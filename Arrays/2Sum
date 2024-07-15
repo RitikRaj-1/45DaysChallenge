@@ -1,0 +1,23 @@
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] ans = new int[2];
+        int left = 0, right=nums.length-1;
+        int sum = nums[0] + nums[nums.length-1];
+        Arrays.sort(nums);
+        while(left < right){
+            while(sum > target && right>left){
+                sum = sum - nums[right];
+                right--;
+            }
+            while(sum < target && left<right){
+                sum -= nums[left];
+                left++;
+                sum += nums[left];
+            }
+            if(sum == target) break;
+        }
+        ans[0] = nums[left];
+        ans[1] = nums[right];
+        return ans;
+    }
+}

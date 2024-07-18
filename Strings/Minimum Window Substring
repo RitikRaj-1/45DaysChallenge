@@ -1,0 +1,67 @@
+class Solution {
+    public String minWindow(String s, String t) {
+        //s = s.toLowerCase();
+        //t = t.toLowerCase();
+        // int n = s.length();
+        // int[] arr = new int[n];
+        // if(s.length() < t.length()){
+        //     return "";
+        // }
+        // if(s.length() == 1 && t.length() == 1 && s.equals(t)) return s;
+        // if(s.length() == 1 && t.length() == 1 && !s.equals(t)) return "";
+        // for(int i=0; i<n; i++){
+        //     int m = t.length();
+        //     if(t.indexOf(s.charAt(i)) != -1){
+        //         int ans = 0;
+        //         int j=i;
+        //         boolean flag = false;
+        //         while(j<n && m>0){
+        //             if(t.indexOf(s.charAt(j)) != -1){
+        //                 m--;
+        //             }
+        //             if(m==0) flag=true;
+        //             ans++;
+        //             j++;
+        //         }
+        //         if(flag==true){
+        //             arr[i]=ans;
+        //         }
+        //     }
+        // }
+        // int minInd = Integer.MAX_VALUE;
+        // int start = 0;
+        // for(int i=0; i<arr.length; i++){
+        //     if(arr[i] != 0){
+        //         if(arr[i]<minInd){
+        //             minInd = arr[i];
+        //             start = i;
+        //         }
+        //     }
+        // }
+        // if(minInd != Integer.MAX_VALUE) return s.substring(start, start+minInd);
+        // else return "";
+
+        int i=0, j=0, count=0, minlen=1000000, start=-1;
+        int[] freq = new int[256];
+        for(char c: t.toCharArray()){
+            freq[(int)c]++;
+        }
+        while(j<s.length()){
+            if(freq[s.charAt(j)] > 0) count++;
+            freq[s.charAt(j)]--;
+
+            while(count == t.length()){
+                if(j-i+1 < minlen){
+                    minlen = j-i+1;
+                    start = i;
+                }
+                freq[s.charAt(i)]++;
+                if(freq[s.charAt(i)] > 0) count--;
+                i++;
+            }
+            j++;
+        }
+        if(start == -1) return "";
+        else return s.substring(start,start + minlen);
+    }
+}

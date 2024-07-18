@@ -1,0 +1,17 @@
+class Solution {
+    public int getDecimalValue(ListNode head) {
+        StringBuilder sb = new StringBuilder();
+        while(head != null){
+            sb.append(head.val);
+            head = head.next;
+        }
+        int ans = 0;
+        int j = 0;
+        for(int i=sb.length()-1; i>=0; i--){
+            int curr = sb.charAt(i) - '0';
+            ans += curr*Math.pow(2, j);
+            j++;
+        }
+        return ans;
+    }
+}

@@ -1,0 +1,21 @@
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode dummy = head;
+        ArrayList<Integer> arr = new ArrayList<>();
+        while(dummy != null){
+            arr.add(dummy.val);
+            dummy = dummy.next;
+        }
+        // System.out.println(arr);
+        int left = 0;
+        int right = arr.size()-1;
+        while(left <= right){
+            if(arr.get(left) != arr.get(right)){
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}

@@ -1,0 +1,36 @@
+class Solution
+{
+    //Function to evaluate a postfix expression.
+    public static int evaluatePostFix(String tokens)
+    {
+        Stack<Integer> stack = new Stack<>();
+        for(char i: tokens.toCharArray()){
+            if(i == '+'){
+                int num1 = stack.pop();
+                int num2 = stack.pop();
+                stack.push(num1+num2);
+                continue;
+            }
+            if(i == '*'){
+                int num1 = stack.pop();
+                int num2 = stack.pop();
+                stack.push(num1*num2);
+                continue;
+            }
+            if(i == '/'){
+                int num1 = stack.pop();
+                int num2 = stack.pop();
+                stack.push(num2/num1);
+                continue;
+            }
+            if(i == '-'){
+                int num1 = stack.pop();
+                int num2 = stack.pop();
+                stack.push(num2-num1);
+                continue;
+            }
+            stack.push(Character.getNumericValue(i));
+        }
+        return stack.peek();
+    }
+}

@@ -1,0 +1,70 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+    HashMap<String, Integer> map = new HashMap<>();
+    List<List<String>> ans = new ArrayList<>();
+    for(String str: strs){
+        char[] chars = str.toCharArray();
+        Arrays.sort(chars);
+        String sortedChar = new String(chars);
+
+        if(map.containsKey(sortedChar)){
+            ans.get(map.get(sortedChar)).add(str);
+        }
+        else{
+            map.put(sortedChar, ans.size());
+            ans.add(new ArrayList<>(Arrays.asList(str)));
+        }
+    }
+    return ans;
+    
+    
+    
+    //     List s = Arrays.asList(strs);
+    //     List<List<String>> ans = new ArrayList<>();
+    //     for(int i=0; i<s.size(); i++){
+    //         String s1 = s.get(i).toString();
+    //         List<String> sublist = new ArrayList<>();
+    //         sublist.add(s1);
+    //         for(int j=i+1; j<s.size(); j++){
+    //             String s2 = s.get(j).toString();
+    //             if(anagram(s1, s2)){
+    //                 sublist.add(s2);
+    //                 s.set(j,"");
+    //             }
+    //         }
+    //         ans.add(sublist);
+    //     }
+
+    //     return ans;
+        
+    // }
+    // private boolean anagram(String s1, String s2){
+    //     int[] sArray1 = new int[26];
+    //     for(char c: s1.toCharArray()){
+    //         sArray1[c-'a']++;
+    //     }
+    //     for(char c: s2.toCharArray()){
+    //         sArray1[c-'a']--;
+    //     }
+    //     for(int i=0; i<26; i++){
+    //         if(sArray1[i] > 0) return false;
+    //     }
+    //     return true;
+
+
+        // HashMap<String, List<String>> map = new HashMap<>();
+        // for (int i=0; i<strs.length; i++) {
+        //     char[] count = new char[26];
+        //     for (int j=0; j<strs[i].length(); j++) {
+        //         char c = strs[i].charAt(j);
+        //         count[c - 'a']++;
+        //     }
+        //     String str = new String(count);
+        //     if (!map.containsKey(str)) {
+        //         map.put(str, new ArrayList<>());
+        //     }
+        //     map.get(str).add(strs[i]);
+        // }
+        // return new ArrayList<>(map.values());
+    }
+}

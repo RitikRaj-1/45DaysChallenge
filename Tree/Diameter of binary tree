@@ -1,0 +1,18 @@
+class Solution {
+    
+    public int diameterOfBinaryTree(TreeNode root) {
+        
+        int[] max = new int[1];
+        findheight(root, max);
+        return max[0];
+    }
+    private int findheight(TreeNode node, int[] max){
+        if(node == null) return 0;
+
+        int lh = findheight(node.left, max);
+        int rh = findheight(node.right, max);
+        
+        max[0] = Math.max(max[0], lh+rh);
+        return 1+Math.max(lh, rh);
+    }
+}

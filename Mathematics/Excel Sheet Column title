@@ -1,0 +1,17 @@
+class Solution {
+    public String convertToTitle(int columnNumber) {
+        int n = columnNumber;
+        String s = "";
+        if(n < 27){
+            s  = s+(char)(64+n);
+            return s;
+        }
+        while(n>0){
+            n--;
+            int mod = n%26;
+            s=(char)('A' + mod)+s;
+            n = n/26;
+        }
+        return s;
+    }
+}

@@ -1,0 +1,30 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode current = head;
+
+        while (current != null) {
+            boolean isDuplicate = false;
+
+            // Check for duplicates
+            while (current.next != null && current.val == current.next.val) {
+                current = current.next;
+                isDuplicate = true;
+            }
+
+            if (isDuplicate) {
+                // Skip all duplicates
+                prev.next = current.next;
+            } else {
+                // Move prev pointer forward only when no duplicate was found
+                prev = prev.next;
+            }
+
+            // Move current pointer forward
+            current = current.next;
+        }
+        return dummy.next;
+    }
+}

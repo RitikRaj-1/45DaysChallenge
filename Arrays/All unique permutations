@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+class Solution {
+    static ArrayList<ArrayList<Integer>> uniquePerms(ArrayList<Integer> arr , int n) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        Collections.sort(arr);
+        ans.add(new ArrayList<>(arr));
+        while (true) {
+            ArrayList<Integer> arr1 = nextPermutation(new ArrayList<>(ans.get(ans.size() - 1)));
+            if (!arr1.equals(ans.get(0))) {
+                ans.add(arr1);
+            } else {
+                break;
+            }
+        }
+        return ans;
+    }
+
+    static ArrayList<Integer> nextPermutation(ArrayList<Integer> arr) {
+        int n = arr.size();
+        int ind = -1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (arr.get(i) < arr.get(i + 1)) {
+                ind = i;
+                break;
+            }
+        }
+        if (ind == -1) {
+            reverse(arr, 0, n - 1);
+        } else {
+            for (int i = n - 1; i > ind; i--) {
+                if (arr.get(i) > arr.get(ind)) {
+                    swap(arr, i, ind);
+                    break;
+                }
+            }
+            reverse(arr, ind + 1, n - 1);
+        }
+        return arr;
+    }
+
+    private static void swap(ArrayList<Integer> arr, int i, int j) {
+        int temp = arr.get(i);
+        arr.set(i, arr.get(j));
+        arr.set(j, temp);
+    }
+
+    private static void reverse(ArrayList<Integer> arr, int i, int j) {
+        while (i < j) {
+            swap(arr, i, j);
+            i++;
+            j--;
+        }
+    }
+}

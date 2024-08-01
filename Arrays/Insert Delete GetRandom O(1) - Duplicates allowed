@@ -1,0 +1,44 @@
+class RandomizedCollection {
+
+    HashMap<Integer, Set<Integer>> map;
+    ArrayList<Integer> arr;
+    public RandomizedCollection() {
+        map = new HashMap<>();
+        arr = new ArrayList<Integer>();
+    }
+    
+    public boolean insert(int val) {
+        // boolean flag = false;
+        if(!map.containsKey(val)){
+            map.put(val, new LinkedHashSet<Integer>());
+            // flag = true;
+        }
+        map.get(val).add(arr.size());
+        arr.add(val);
+        return map.get(val).size() == 1;
+    }
+    
+    public boolean remove(int val) {
+        if(!map.containsKey(val) || map.get(val).size() == 0) return false;
+        int removeind = map.get(val).iterator().next();
+        map.get(val).remove(removeind);
+        int last = arr.get(arr.size()-1);
+        arr.set(removeind, last);
+        map.get(last).add(removeind);
+        map.get(last).remove(arr.size()-1);
+        arr.remove(arr.size()-1);
+        return true;
+    }
+    
+    public int getRandom() {
+        return arr.get((int)(Math.random()*arr.size()));
+    }
+}
+
+/**
+ * Your RandomizedCollection object will be instantiated and called as such:
+ * RandomizedCollection obj = new RandomizedCollection();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */

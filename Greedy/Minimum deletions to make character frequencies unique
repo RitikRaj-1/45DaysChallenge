@@ -1,0 +1,18 @@
+class Solution {
+    public int minDeletions(String s) {
+        int[] freq = new int[26];
+        for(char c: s.toCharArray()){
+            freq[c-'a']++;
+        }
+        HashSet<Integer> set = new HashSet<>();
+        int count = 0;
+        for(int i: freq){
+            while(i>0 && set.contains(i)){
+                i--;
+                count++;
+            }
+            set.add(i);
+        }
+        return count;
+    }
+}

@@ -1,0 +1,27 @@
+class Solution {
+    
+    public List<String> binaryTreePaths(TreeNode root) {
+        ArrayList<String> list = new ArrayList<>();
+        if(root != null){
+            helper(root, new StringBuilder(), list);
+        }
+        return list;
+    }
+    public void helper(TreeNode root, StringBuilder s, ArrayList<String> list){
+        int len = s.length();
+        if(root.left == null && root.right == null){
+            s.append(root.val);
+            list.add(s.toString());
+        }
+        else{
+            s.append(root.val);
+            s.append("->");
+        
+        if(root.left != null) helper(root.left, s, list);
+        if(root.right != null) helper(root.right, s, list);
+        }
+
+        s.setLength(len); //for making the stringuilder length same as what it was before in order to enhance the backtracking mechanism
+        return;
+    }
+}

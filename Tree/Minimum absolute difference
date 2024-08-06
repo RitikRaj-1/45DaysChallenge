@@ -1,0 +1,21 @@
+class Solution {
+    private TreeNode prev;
+    private int mindiff;
+    public int getMinimumDifference(TreeNode root) {
+        prev = null;
+        mindiff = Integer.MAX_VALUE;
+        helper(root);
+        return mindiff;
+    }
+    public void helper(TreeNode root){
+        if(root == null) return;
+
+        helper(root.left);
+        if(prev != null){
+            mindiff = Math.min(mindiff, Math.abs(root.val - prev.val));
+        }
+        prev = root;
+        helper(root.right);
+
+    }
+}

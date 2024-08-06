@@ -1,0 +1,18 @@
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        return (maxdepth(root) != -1);
+    }
+    public int maxdepth(TreeNode root){
+        if(root == null) return 0;
+
+        int leftdepth = maxdepth(root.left);
+        if(leftdepth == -1) return -1;
+
+        int rightdepth = maxdepth(root.right);
+        if(rightdepth == -1) return -1;
+
+        if(Math.abs(leftdepth - rightdepth) > 1) return -1;
+
+        return Math.max(leftdepth, rightdepth) + 1;
+    }
+}

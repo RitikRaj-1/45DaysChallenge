@@ -1,0 +1,42 @@
+class Solution {
+    public String numberToWords(int num) {
+        if(num == 0) return "Zero";
+
+        String[] big = {"Thousand ", "Million ", "Billion "};
+        String result = numToWords(num%1000);
+        num /= 1000;
+        if(num > 0 && num%1000>0){
+            result = numToWords(num%1000) + big[0] + result;
+        }
+        num = num/1000;
+        if(num > 0 && num%1000>0){
+            result = numToWords(num%1000) + big[1] + result;
+        }
+        num = num/1000;
+        if(num > 0){
+            result = numToWords(num%1000) + big[2] + result;
+        }
+        return result.trim();
+    }
+    public String numToWords(int num){
+        String[] digits = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+        String[] teendigits = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+        String[] tens = {"", "", "Twenty","Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+        String result = "";
+        if(num > 99){
+            result += digits[num/100] + " Hundred ";
+        }
+        num = num%100;
+        if(num < 20 && num > 9){
+            result += teendigits[num%10] + " ";
+        }
+        else{
+            if(num > 19){
+                result += tens[num/10] + " ";
+            }
+            num = num % 10;
+            if(num > 0) result += digits[num] + " ";
+        }
+        return result;
+    }
+}

@@ -1,0 +1,28 @@
+class Solution
+{
+    public static boolean isDeadEnd(Node root)
+    {
+        //Add your code here.
+        ArrayList<Integer> arr = new ArrayList<>();
+        ArrayList<Integer> leaf = new ArrayList<>();
+        inorder(root, arr, leaf);
+        for(int i=0; i<leaf.size(); i++){
+            if(leaf.get(i) == 1){
+                if(arr.contains(2)) return true;
+            }
+            else{
+                if(arr.contains(leaf.get(i) + 1) && arr.contains(leaf.get(i) - 1)) return true;
+            }
+        }
+        return false;
+    }
+    public static void inorder(Node root, ArrayList<Integer> arr, ArrayList<Integer> leaf){
+        if(root == null) return;
+        
+        inorder(root.left, arr, leaf);
+        arr.add(root.data);
+        if(root.left == null && root.right == null && !leaf.contains(root.data)) leaf.add(root.data);
+        inorder(root.right, arr, leaf);
+        return;
+    }
+}

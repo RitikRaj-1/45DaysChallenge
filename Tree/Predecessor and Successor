@@ -1,0 +1,33 @@
+class Solution {
+    public static void findPreSuc(Node root, Node[] pre, Node[] suc, int key) {
+        // code here.
+        // update pre[0] with the predecessor of the key
+        // update suc[0] with the successor of the key
+        ArrayList<Node> result = new ArrayList<>();
+        inorder(root, result);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i).data == key){
+                if(i>0) pre[0] = result.get(i-1);
+                if(i<result.size()-1) suc[0] = result.get(i+1);
+                break;
+            }
+            else if(result.get(i).data > key){
+                if(i>0) pre[0] = result.get(i-1);
+                if(i<result.size()) suc[0] = result.get(i);
+                break;
+            }
+        }
+        if(result.get(result.size() - 1).data < key){
+            pre[0] = result.get(result.size() - 1);
+        }
+        
+    }
+    public static void inorder(Node root, ArrayList<Node> arr){
+        if(root == null) return;
+        
+        inorder(root.left, arr);
+        arr.add(root);
+        inorder(root.right, arr);
+        return;
+    }
+}

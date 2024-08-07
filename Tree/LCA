@@ -1,0 +1,31 @@
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        ArrayList<TreeNode> forp = new ArrayList<>();
+        ArrayList<TreeNode> forq = new ArrayList<>();
+        helper(root, p, forp);
+        helper(root, q, forq);
+        TreeNode prev = null;
+        for(int i=0; i<Math.min(forp.size(), forq.size()); i++){
+            // if(forp.get(i) == null || forq.get(i) == null) break;
+            if(forp.get(i).val != forq.get(i).val){
+                return prev;
+            }
+            prev = forp.get(i);
+        }
+        return prev;
+    }
+    public boolean helper(TreeNode root, TreeNode x, ArrayList<TreeNode> arr){
+        if(root == null) return false;
+        
+        arr.add(root);
+        if(root.val == x.val) return true;
+        else if(root.val < x.val){
+            if(helper(root.right, x, arr)) return true;
+        }
+        else{
+            if(helper(root.left, x, arr)) return true;
+        }
+        arr.remove(arr.size()-1);
+        return false;
+    }
+}

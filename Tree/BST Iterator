@@ -1,0 +1,32 @@
+class BSTIterator {
+    ArrayList<TreeNode> nodes;
+    int pointer;
+    public BSTIterator(TreeNode root) {
+        nodes = new ArrayList<>();
+        pointer = 0;
+        inorder(root, nodes);
+    }
+    
+    public int next() {
+        if(hasNext()){
+            pointer++;
+            return nodes.get(pointer-1).val;
+        }
+        return -1;
+    }
+    
+    public boolean hasNext() {
+        if(pointer < nodes.size()){
+            return true;
+        }
+        else return false;
+    }
+
+    private void inorder(TreeNode root, ArrayList<TreeNode> arr){
+        if(root == null) return;
+
+        inorder(root.left, arr);
+        arr.add(root);
+        inorder(root.right, arr);
+    }
+}

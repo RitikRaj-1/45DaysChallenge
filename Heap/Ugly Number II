@@ -1,0 +1,25 @@
+class Solution {
+    public int nthUglyNumber(int n) {
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        Set<Long> set = new HashSet<>();
+        pq.offer(1L);
+        set.add(1L);
+        long ugly = 1;
+        for(int i=1; i<=n; i++){
+            ugly = pq.poll();
+            if(!set.contains(ugly*2)){
+                set.add(ugly*2);
+                pq.offer(ugly*2);
+            }
+            if(!set.contains(ugly*3)){
+                set.add(ugly*3);
+                pq.offer(ugly*3);
+            }
+            if(!set.contains(ugly*5)){
+                set.add(ugly*5);
+                pq.offer(ugly*5);
+            }
+        }
+        return (int) ugly;
+    }
+}

@@ -1,0 +1,22 @@
+class Solution {
+    private PriorityQueue<Integer> pq;
+    public int kthSmallest(TreeNode root, int k) {
+        this.pq = new PriorityQueue<>(Comparator.reverseOrder());
+        inorder(root, k);
+        return pq.peek();
+    }
+    public void inorder(TreeNode root, int k){
+        if(root == null) return;
+
+        inorder(root.left, k);
+        if(pq.size()<k){
+            pq.offer(root.val);
+        }
+        else if(pq.peek() > root.val){
+            pq.offer(root.val);
+            if(pq.size()>k) pq.poll();
+        }
+        inorder(root.right, k);
+        return;
+    }
+}

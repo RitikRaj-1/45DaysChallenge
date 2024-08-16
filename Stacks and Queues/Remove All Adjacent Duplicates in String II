@@ -1,0 +1,40 @@
+class Solution {
+    class Pair<K, V>{
+        private K key;
+        private V value;
+
+        public Pair(K _key, V _value){
+            this.key = _key;
+            this.value = _value;
+        }
+    }
+    public String removeDuplicates(String s, int k) {
+        Stack<Pair<Character, Integer>> st = new Stack<>();
+
+        for(int i=0;i<s.length(); i++){
+            char c = s.charAt(i);
+            if(st.isEmpty()){
+                st.push(new Pair<Character, Integer>(c, 1));
+            }
+            else if(st.peek().key == c){
+                st.peek().value = st.peek().value + 1;
+                if(st.peek().value == k){
+                    st.pop();
+                }
+            }
+            else {
+                st.push(new Pair<Character, Integer>(c, 1));
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!st.isEmpty()){
+            int freq = st.peek().value;
+            char c = st.peek().key;
+            for(int i=0; i<freq; i++){
+                sb.append(c);
+            }
+            st.pop();
+        }
+        return sb.reverse().toString();
+    }
+}

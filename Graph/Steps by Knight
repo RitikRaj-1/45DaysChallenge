@@ -1,0 +1,57 @@
+class Solution
+{
+    //Function to find out minimum steps Knight needs to reach target position.
+    class Pair{
+        int x;
+        int y;
+        Pair(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+    public int minStepToReachTarget(int KnightPos[], int TargetPos[], int N)
+    {
+        // Code here
+        boolean[][] vis = new boolean[N][N];
+        Queue<Pair> q = new LinkedList<>();
+        
+        int inx = KnightPos[0]-1;
+        int iny = KnightPos[1]-1;
+        
+        int tx = TargetPos[0]-1;
+        int ty = TargetPos[1]-1;
+        
+        if(tx == inx && ty == iny) return 0;
+        q.add(new Pair(inx, iny));
+        vis[inx][iny] = true;
+        
+        int ans = 0;
+        while(!q.isEmpty()){
+            
+            int size = q.size();
+            ans++;
+            while(size!=0){
+                Pair top = q.poll();
+                
+                int xx = top.x;
+                int yy = top.y;
+                
+                int[] posx = {1,-1,1,-1,2,2,-2,-2};
+                int[] posy = {2,2,-2,-2,1,-1,1,-1};
+                
+                for(int i=0; i<8; i++){
+                    int nx = xx + posx[i];
+                    int ny = yy + posy[i];
+                    
+                    if(nx==tx && ny==ty) return ans;
+                    if(nx>=0 && ny>=0 && nx<N && ny<N && !vis[nx][ny]){
+                        vis[nx][ny] = true;
+                        q.add(new Pair(nx, ny));
+                    }
+                }
+                size--;
+            }
+        }
+        return -1;
+    }
+}

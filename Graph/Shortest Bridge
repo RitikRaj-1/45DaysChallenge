@@ -1,0 +1,69 @@
+class Solution {
+    class Pair{
+        int first;
+        int second;
+        Pair(int x, int y){
+            this.first = x;
+            this.second = y;
+        }
+    }
+    public int shortestBridge(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        boolean[][] vis = new boolean[n][m];
+        int[] dirx = {-1, 1, 0, 0};
+        int[] diry = {0, 0, 1, -1};
+        Queue<Pair> q = new LinkedList<>();
+
+        boolean flag = false;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j] == 1){
+                    dfs(i, j, vis, dirx, diry, grid, q);
+                    flag=true;
+                    break;
+                }
+            }
+            if(flag) break;
+        }
+
+        int steps=0;
+        while(q.size()>0){
+            int size = q.size();
+
+            while(size-->0){
+                Pair temp = q.poll();
+                int xx = temp.first;
+                int yy = temp.second;
+
+                for(int i=0; i<4; i++){
+                    int nx = xx+dirx[i];
+                    int ny = yy+diry[i];
+
+                    if(nx>=0 && ny>=0 && nx<n && ny<m && !vis[nx][ny]){
+                        if(grid[nx][ny] == 1) return steps;
+                    
+                    q.add(new Pair(nx, ny));
+                    vis[nx][ny] = true;
+                    }
+                }
+            }
+            steps++;
+        }
+        return -1;
+    }
+    public void dfs(int i, int j, boolean[][] vis, int[] dirx, int[] diry, int[][] grid, Queue<Pair> q){
+        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || vis[i][j] || grid[i][j]==0) return;
+
+        vis[i][j] = true;
+
+        q.add(new Pair(i, j));
+
+        for(int k=0; k<4; k++){
+            int nx = i+dirx[k];
+            int ny = j+diry[k];
+
+            dfs(nx, ny, vis, dirx, diry, grid, q);
+        }
+    }
+}

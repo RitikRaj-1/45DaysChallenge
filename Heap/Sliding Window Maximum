@@ -1,0 +1,50 @@
+PriorityQueue (Shouldn't Work)- 
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((int[] a,int[] b) -> Integer.compare(b[0], a[0]));
+
+        int[] result = new int[nums.length-k+1];
+
+        for(int i=0; i<nums.length; i++){
+            while (!pq.isEmpty() && pq.peek()[1] <= i - k) {
+                pq.poll();
+            }
+            
+            // Add current element along with its index to the MaxHeap
+            pq.offer(new int[] {nums[i], i});
+            
+            // Once we've processed at least k elements, the top of the heap is the maximum for the window
+            if (i >= k - 1) {
+                result[i - k + 1] = pq.peek()[0];
+            }
+        }
+        
+        return result;
+        }
+    }
+
+Better Solution - 
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> dq = new LinkedList<>();
+        int[] result = new int[nums.length-k+1];
+        int p=0;
+
+        for(int i=0; i<nums.length; i++){
+            int num = nums[i];
+
+            while(!dq.isEmpty() && dq.getLast() < num){
+                dq.pollLast();
+            }
+            dq.addLast(num);
+
+            if(i>=k && nums[i-k] == dq.getFirst()) dq.pollFirst();
+
+            if(i >= k-1){
+                result[p] = dq.getFirst();
+                p++;
+            }
+        }
+        return result;
+    }
+}
